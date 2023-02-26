@@ -20,15 +20,6 @@ class UserController extends Controller
 
     public function absen()
     {
-        // $jam_masuk = JamKerja::where('keterangan', 'masuk')->first();
-
-        // $jam_masuk = $jam_masuk->jam_selesai;
-
-        // $now = \Carbon\Carbon::now();
-
-        // dd($now);
-
-        // $absen =
 
         return view('user.absen.index');
     }
