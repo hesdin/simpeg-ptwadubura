@@ -27,6 +27,11 @@ class User extends Authenticatable
     return $this->belongsTo(Absen::class);
   }
 
+  // public function absenToday(Type $var = null)
+  // {
+
+  // }
+
   public function gaji()
   {
     return $this->belongsTo(Gaji::class);

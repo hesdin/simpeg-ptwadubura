@@ -52,7 +52,16 @@
           </div>
         </div>
         <div class="container-login100">
+
           <div class="wrap-login100 p-0">
+
+            @if (Session::has('fail'))
+              <div class="alert alert-danger alert-dismissible fade show mb-0 mx-3 my-3" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                <span class="alert-inner--text"><strong>Gagal! </strong>{{ Session::get('fail') }}</span>
+              </div>
+            @endif
+
             <div class="card-body">
               <form class="login100-form validate-form" action="{{ route('login.check') }}" method="POST">
                 @csrf

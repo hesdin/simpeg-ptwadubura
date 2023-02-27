@@ -27,56 +27,14 @@
               </div>
               <div class="col-lg-12 col-md-12 col-xl-6">
                 <div class="text-xl-right mt-4 mt-xl-0">
-                  <a href="{{ route('admin.logout') }}" class="btn btn-white btn-icon">
+                  <a href="{{ route('admin.logout') }}" class="btn btn-danger btn-icon">
                     <span>
                       <i class="fe fe-log-in"></i>
                     </span> Logout
                   </a>
-                  <a href="editprofile.html" class="btn btn-primary">Edit Profile</a>
+
                 </div>
-                {{-- <div class="mt-5">
-                  <div class="main-profile-contact-list float-lg-end d-lg-flex">
-                    <div class="me-5">
-                      <div class="media">
-                        <div class="media-icon bg-primary  me-3 mt-1">
-                          <i class="fe fe-file-plus fs-20 text-white"></i>
-                        </div>
-                        <div class="media-body">
-                          <span class="text-muted">Posts</span>
-                          <div class="fw-semibold fs-25">
-                            328
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="me-5 mt-5 mt-md-0">
-                      <div class="media">
-                        <div class="media-icon bg-success me-3 mt-1">
-                          <i class="fe fe-users  fs-20 text-white"></i>
-                        </div>
-                        <div class="media-body">
-                          <span class="text-muted">Followers</span>
-                          <div class="fw-semibold fs-25">
-                            937k
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="me-0 mt-5 mt-md-0">
-                      <div class="media">
-                        <div class="media-icon bg-orange me-3 mt-1">
-                          <i class="fe fe-wifi fs-20 text-white"></i>
-                        </div>
-                        <div class="media-body">
-                          <span class="text-muted">Following</span>
-                          <div class="fw-semibold fs-25">
-                            2,876
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> --}}
+
               </div>
             </div>
           </div>

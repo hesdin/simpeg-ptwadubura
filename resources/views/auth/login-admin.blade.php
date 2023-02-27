@@ -37,7 +37,7 @@
 
     <!-- GLOABAL LOADER -->
     <div id="global-loader">
-      <img src="../assets/images/loader.svg" class="loader-img" alt="Loader">
+      <img src="{{ asset('assets/images/loader.svg') }}" class="loader-img" alt="Loader">
     </div>
     <!-- /GLOABAL LOADER -->
 
@@ -52,7 +52,16 @@
           </div>
         </div>
         <div class="container-login100">
+
           <div class="wrap-login100 p-0">
+
+            @if (Session::has('fail'))
+              <div class="alert alert-danger alert-dismissible fade show mb-0 mx-3 my-3" role="alert">
+                <span class="alert-inner--icon"><i class="fe fe-slash"></i></span>
+                <span class="alert-inner--text"><strong>Gagal! </strong>{{ Session::get('fail') }}</span>
+              </div>
+            @endif
+
             <div class="card-body">
               <form action="{{ route('admin.login.check') }}" method="POST" class="login100-form validate-form">
                 @csrf

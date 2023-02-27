@@ -39,39 +39,64 @@ class UserController extends Controller
 
         if ($request->has('absen_masuk')) {
 
-            $absen = Absen::where('user_id', auth()->guard('web')->user()->id)->first();
-            if ($absen) {
+            $user = auth()->guard('web')->user()->id;
+
+            $absen = Absen::where('user_id', $user)
+                ->whereDate('created_at', today())
+                ->count();
+
+            // dd($absen);
+
+            if ($absen > 0) {
                 return back()->with('fail', 'Kamu sudah absen masuk');
             }
             ;
 
             $absen = new Absen;
-            // $time = \Carbon\Carbon::now();
-            // dd($mytime->toDateTimeString());
 
             $absen->user_id = auth()->guard('web')->user()->id;
             $absen->absen_masuk = \Carbon\Carbon::now();
 
             $absen->save();
 
-            return back()->with('success', 'Absen masuk berhasil, kembali lagi nanti untuk absen pulang');
+            return back()->with('success', 'Absen masuk berhasil, kembali nanti untuk absen pulang');
         }
 
         if ($request->has('absen_pulang')) {
 
-            $absen = Absen::where('user_id', auth()->guard('web')->user()->id)->first();
+            $user = auth()->guard('web')->user()->id;
 
-            if ($absen->absen_pulang !== null) {
-                return back()->with('fail', 'Absensi hari ini selesai, kembali absen besok');
+            $absen_masuk = Absen::where('user_id', $user)
+                ->whereDate('created_at', today())
+                ->whereNotNull('absen_masuk')
+                ->count();
+
+
+            if ($absen_masuk === 0) {
+                return redirect()->back()->with('fail', 'Silahkan Absen Masuk dulu');
+
+            }
+
+            $absen_pulang = Absen::where('user_id', $user)
+                ->whereDate('created_at', today())
+                ->whereNull('absen_pulang')
+                ->count();
+
+            if ($absen_pulang > 0) {
+
+                $absen = Absen::where('user_id', $user)
+                    ->whereDate('created_at', today())->first();
+                $absen->user_id = auth()->guard('web')->user()->id;
+                $absen->absen_pulang = \Carbon\Carbon::now();
+
+                $absen->update();
+
+                return back()->with('success', 'Absen pulang berhasil, kembali absen besok');
             }
             ;
+            return back()->with('fail', 'Absensi hari ini selesai, kembali absen besok');
 
-            $absen->user_id = auth()->guard('web')->user()->id;
-            $absen->absen_pulang = \Carbon\Carbon::now();
 
-            $absen->update();
-
-            return back()->with('success', 'Absen pulang berhasil, kembali absen besok');
         }
     }
 
