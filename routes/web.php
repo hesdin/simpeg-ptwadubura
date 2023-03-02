@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\User\UserController;
 
@@ -31,6 +32,9 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('laporan', [UserController::class, 'laporanStore'])->name('laporan.store');
     Route::patch('laporan/{id}', [UserController::class, 'laporanUpdate'])->name('laporan.update');
     Route::get('laporan/{id}', [UserController::class, 'laporanDelete'])->name('laporan.delete');
+
+    // Export
+    Route::get('export/pdf/{id}', [ExportController::class, 'pegawaiPdf'])->name('export.pdf');
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });
