@@ -47,7 +47,7 @@
               <div class="row">
                 <div class="col">
                   <h6 class="">Total Laporan</h6>
-                  <h3 class="mb-2 number-font`">{{ $laporan }}</h3>
+                  <h3 class="mb-2 number-font">{{ $laporan }}</h3>
                 </div>
                 <div class="col col-auto">
                   <div class="counter-icon bg-danger-gradient box-shadow-danger brround  ms-auto">
@@ -64,7 +64,7 @@
               <div class="row">
                 <div class="col">
                   <h6 class="">Total Gaji</h6>
-                  <h3 class="mb-2 number-font">{{ $gaji }}</h3>
+                  <h4 class="mb-2 number-font">{{ number_format($gaji, 0, ',', '.') }}</h4>
                 </div>
                 <div class="col col-auto">
                   <div class="counter-icon bg-secondary-gradient box-shadow-secondary brround ms-auto">

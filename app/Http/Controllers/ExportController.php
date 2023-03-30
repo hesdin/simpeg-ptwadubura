@@ -22,4 +22,12 @@ class ExportController extends Controller
 
         // return $pdf->stream();
     }
+
+    public function exportPdf()
+    {
+        $d_absen = Absen::all();
+
+        $pdf = PDF::loadview('admin.exports.absen-pdf', ['d_absen' => $d_absen]);
+        return $pdf->stream();
+    }
 }

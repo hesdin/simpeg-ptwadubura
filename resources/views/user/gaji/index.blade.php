@@ -69,16 +69,14 @@
                           <td>{{ $gaji->tunjangan }}</td>
                           <td>{{ $gaji->bonus_lembur }}</td>
                           <td>{{ $gaji->potongan }}</td>
-                          <td>{{ $gaji->total_gaji }}aa</td>
-                          <form action="{{ route('total.gaji', $gaji->id) }}" method="POST">
-                            @csrf
-                            <td class="">
-                              <button type="submit" name="lihat_slip" class="btn btn-primary btn-sm rounded-11 me-2"
-                                data-bs-toggle="tooltip" data-bs-original-title="Lihat">
-                                <i style="font-size: 18px" class="mdi mdi-arrow-right-bold-box"></i>
-                              </button>
-                            </td>
-                          </form>
+                          <td><span class="fw-bolder">{{ $gaji->total_gaji }}</span></td>
+                          <td class="">
+                            <a href="{{ route('slip.gaji', $gaji->id) }}" class="btn btn-primary btn-sm rounded-11 me-2"
+                              data-bs-toggle="tooltip" data-bs-original-title="Lihat">
+                              <i style="font-size: 18px" class="mdi mdi-arrow-right-bold-box"></i>
+                            </a>
+                          </td>
+
                         </tr>
                       @endforeach
 

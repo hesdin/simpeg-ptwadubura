@@ -110,6 +110,56 @@ class AdminController extends Controller
         return view('admin.data-penggajian.index', compact('d_pegawai'));
     }
 
+    public function penggajiansHitung($id)
+    {
+        $gaji = Gaji::where('user_id', $id)->whereMonth('created_at', '=', date('m'))->first();
+
+        if ($gaji) {
+            return back()->with('error', 'Gaji bulan ini sudah dihitung, cek pada riwayat gaji');
+        }
+
+        $user = User::findOrFail($id);
+        $absen = Absen::where('user_id', $user->id)
+            ->whereMonth('created_at', '=', date('m'))
+            ->get();
+
+        // inisialisasi variabel jumlah jam kerja dan upah
+        $jumlah_jam_kerja = 0;
+        $potongan = 0;
+        $lembur = 0;
+
+        // loop untuk menghitung jumlah jam kerja dan upah dari setiap data absen
+        foreach ($absen as $data) {
+            // konversi waktu masuk dan pulang ke dalam format timestamp
+            $masuk = strtotime(date('Y-m-d', strtotime($data['created_at']))  . ' ' . $data['absen_masuk']);
+            $pulang = strtotime(date('Y-m-d', strtotime($data['created_at'])) . ' ' . $data['absen_pulang']);
+
+            // hitung selisih waktu
+            $selisih_waktu = date_diff(date_create(date('H:i:s', $masuk)), date_create(date('H:i:s', $pulang)));
+
+            // hitung jumlah jam kerja
+            $jam_kerja = $selisih_waktu->h + ($selisih_waktu->i / 60);
+
+            // hitung upah
+            if ($jam_kerja >= 8) {
+                $lembur += ($jam_kerja - 8) * 170000;
+                $jumlah_jam_kerja += 8;
+            } else {
+                $potongan += (8 - $jam_kerja) * 170000;
+                $jumlah_jam_kerja += $jam_kerja;
+            }
+        }
+
+        $data = [
+            'user' => $user,
+            'potongan' => $potongan,
+            'lembur' => $lembur,
+        ];
+
+
+        return view('admin.data-penggajian.hitung', $data);
+    }
+
     public function penggajiansShow($id)
     {
         $d_gaji = Gaji::where('user_id', $id)->get();
@@ -126,32 +176,12 @@ class AdminController extends Controller
 
     public function totalGaji(Request $request, $id)
     {
-
-        if ($request->has('lihat_slip')) {
-            $admin = $request->lihat_slip;
-            $gaji = Gaji::findOrFail($id);
-
-            $data = [
-                'admin' => $admin,
-                'gaji' => $gaji,
-            ];
-            return view('admin.data-penggajian.gaji', $data);
-        }
-
         $gaji_pokok = $request->gaji_pokok;
         $tunjangan = $request->tunjangan;
         $bonus_lembur = $request->bonus_lembur;
         $potongan = $request->potongan;
 
-        $total_gaji = $gaji_pokok + $tunjangan;
-
-        if ($request->filled('bonus_lembur')) {
-            $total_gaji = $total_gaji + $bonus_lembur;
-        }
-
-        if ($request->filled('potongan')) {
-            $total_gaji = $total_gaji - $potongan;
-        }
+        $total_gaji = $gaji_pokok + $tunjangan + $bonus_lembur - $potongan;
 
         $gaji = new Gaji;
 
@@ -164,7 +194,7 @@ class AdminController extends Controller
 
         $gaji->save();
 
-        return back()->with('success', 'Gaji berhasil di tambahkan, silahkan cek slip gaji lalu kirim info gaji ke pegawai');
+        return redirect()->route('admin.penggajian.show', $id)->with('success', 'Gaji berhasil di tambahkan, silahkan cek slip gaji lalu kirim info gaji ke pegawai');
     }
 
     public function statusGaji($id)
@@ -178,10 +208,18 @@ class AdminController extends Controller
         return redirect()->route('admin.penggajian.show', $gaji->user_id);
     }
 
-    public function Cekgaji()
+    public function slipGaji($id)
     {
-        # code...
+        $gaji = Gaji::findOrFail($id);
+
+        $data = [
+
+            'gaji' => $gaji,
+        ];
+        return view('admin.data-penggajian.gaji', $data);
     }
+
+
 
     public function laporan()
     {

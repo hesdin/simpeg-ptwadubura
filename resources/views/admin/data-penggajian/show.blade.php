@@ -12,7 +12,7 @@
       </ol> --}}
     </div>
     <div class="ms-auto pageheader-btn">
-      <a href="" class="btn btn-primary btn-icon text-white me-2" data-bs-target="#modaldemo1" data-bs-toggle="modal">
+      <a href="{{ route('admin.hitung.show', $user->id) }}" class="btn btn-primary btn-icon text-white me-2">
         <span>
           <i class="fe fe-plus"></i>
         </span> Tambah
@@ -70,16 +70,13 @@
                           <td>{{ $gaji->bonus_lembur }}</td>
                           <td>{{ $gaji->potongan }}</td>
                           <td>{{ $gaji->total_gaji }}</td>
-                          <form action="{{ route('admin.total.gaji', $gaji->id) }}" method="POST">
-                            @csrf
-                            <td class="">
-                              <button type="submit" name="lihat_slip" value="admin"
-                                class="btn btn-primary btn-sm rounded-11 me-2" data-bs-toggle="tooltip"
-                                data-bs-original-title="Lihat">
-                                <i style="font-size: 18px" class="mdi mdi-arrow-right-bold-box"></i>
-                              </button>
-                            </td>
-                          </form>
+                          <td class="">
+                            <a href="{{ route('admin.slip.gaji', $gaji->id) }}"
+                              class="btn btn-primary btn-sm rounded-11 me-2" data-bs-toggle="tooltip"
+                              data-bs-original-title="Lihat">
+                              <i style="font-size: 18px" class="mdi mdi-arrow-right-bold-box"></i>
+                            </a>
+                          </td>
                         </tr>
                       @endforeach
 
@@ -97,54 +94,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="modaldemo1">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content modal-content-demo">
-        <div class="modal-header">
-          <h6 class="modal-title">Penggajian</h6><button aria-label="Close" class="btn-close"
-            data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-          <form action="{{ route('admin.total.gaji', $user->id) }}" method="POST">
-            @csrf
-            <div class="">
-              <div class="form-group">
-                <label for="gaji_pokok" class="form-label">Gaji Pokok</label>
-                <input type="text" class="form-control" id="gaji_pokok" name="gaji_pokok" placeholder="Gaji Pokok"
-                  required>
-              </div>
 
-              <div class="form-group">
-                <label for="tunjangan" class="form-label">Tunjangan</label>
-                <input type="text" class="form-control" id="tunjangan" name="tunjangan" placeholder="Tunjangan"
-                  required>
-              </div>
-
-              <div class="form-group">
-                <label for="bonus_lembur" class="form-label">Bonus / Lembur</label>
-                <input type="text" class="form-control" id="bonus_lembur" name="bonus_lembur"
-                  placeholder="Bonus / Lembur" required>
-                <p class="text-danger">Isi 0 jika tidak ada bonus / lembur</p>
-
-              </div>
-
-              <div class="form-group">
-                <label for="potongan" class="form-label">Potongan</label>
-                <input type="text" class="form-control" id="potongan" name="potongan" placeholder="Potongan"
-                  required>
-                <p class="text-danger">Isi 0 jika tidak ada potongan</p>
-              </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" type="submit">Proses</button>
-          <button class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-        </div>
-        </form>
-
-      </div>
-    </div>
-  </div>
   @push('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
@@ -155,6 +105,14 @@
           icon: 'success',
           title: 'Sukses',
           text: '{{ Session::get('success') }}',
+        }) r
+      @endif
+
+      @if (Session::has('error'))
+        Swal.fire({
+          icon: 'danger',
+          title: 'Gagal',
+          text: '{{ Session::get('error') }}',
         })
       @endif
 

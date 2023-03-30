@@ -26,7 +26,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('absen', [UserController::class, 'absen'])->name('absen');
     Route::post('absen', [UserController::class, 'absenHarian'])->name('absen.harian');
     Route::get('gaji', [UserController::class, 'gaji'])->name('gaji');
-    Route::post('gaji/{id}', [AdminController::class, 'totalGaji'])->name('total.gaji');
+    Route::get('gaji/{id}', [AdminController::class, 'slipGaji'])->name('slip.gaji');
     Route::get('cek-gaji', [UserController::class, 'Cekgaji'])->name('cek.gaji');
     Route::get('laporan', [UserController::class, 'laporan'])->name('laporan');
     Route::post('laporan', [UserController::class, 'laporanStore'])->name('laporan.store');
@@ -60,12 +60,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('absensi', [AdminController::class, 'absensi'])->name('absensi');
             Route::get('absensi/{id}', [AdminController::class, 'absensiShow'])->name('absensi.show');
             Route::get('penggajian', [AdminController::class, 'penggajian'])->name('penggajian');
+
+            Route::get('hitung/{id}', [AdminController::class, 'penggajiansHitung'])->name('hitung.show');
+
             Route::get('penggajian/{id}', [AdminController::class, 'penggajiansShow'])->name('penggajian.show');
+
             Route::post('gaji/{id}', [AdminController::class, 'totalGaji'])->name('total.gaji');
+
+            Route::get('slip-gaji/{id}', [AdminController::class, 'slipGaji'])->name('slip.gaji');
+
             Route::post('gaji-status/{id}', [AdminController::class, 'statusGaji'])->name('status.gaji');
+
             Route::resource('data-pegawai', PegawaiController::class);
             Route::get('laporan', [AdminController::class, 'laporan'])->name('laporan');
             Route::get('download/{id}', [AdminController::class, 'download'])->name('download');
+
+            Route::get('export-pdf', [ExportController::class, 'exportPdf'])->name('export.pdf');
 
             Route::get('logout', [AuthController::class, 'logoutAdmin'])->name('logout');
         }

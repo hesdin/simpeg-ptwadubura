@@ -12,8 +12,8 @@
               <div class="col-lg-12 col-md-12 col-xl-6">
                 <div class="wideget-user-desc d-sm-flex">
                   <div class="wideget-user-img">
-                    <img class="avatar avatar-xxl brround cover-image"
-                      src="{{ asset('foto pegawai/' . Auth::guard('web')->user()->foto) }}" alt="img">
+                    <img class="avatar avatar-xxl brround cover-image" src="{{ asset('assets/images/users/user.jpg') }}"
+                      alt="img">
                   </div>
                   <div class="user-wrap">
                     <h4>{{ Auth::guard('web')->user()->nama_lengkap }}</h4>
