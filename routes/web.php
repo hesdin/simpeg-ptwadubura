@@ -57,8 +57,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::patch('jabatan/{id}', [AdminController::class, 'jabatanUpdate'])->name('jabatan.update');
             Route::delete('jabatan/{id}', [AdminController::class, 'jabatanDestroy'])->name('jabatan.destroy');
             Route::get('jam-kerja', [AdminController::class, 'jamKerja'])->name('jam.kerja');
+
+            Route::get('absensi-harian', [AdminController::class, 'absensiHarian'])->name('absensi.harian');
+
             Route::get('absensi', [AdminController::class, 'absensi'])->name('absensi');
             Route::get('absensi/{id}', [AdminController::class, 'absensiShow'])->name('absensi.show');
+
             Route::get('penggajian', [AdminController::class, 'penggajian'])->name('penggajian');
 
             Route::get('hitung/{id}', [AdminController::class, 'penggajiansHitung'])->name('hitung.show');

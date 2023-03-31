@@ -35,8 +35,6 @@
             <li class="side-menu-label1"><a href="javascript:void(0)">Data Master</a></li>
             {{-- <li><a href="{{ route('admin.jam.kerja') }}" class="slide-item">Jam Kerja</a></li> --}}
             <li><a href="{{ route('admin.jabatan') }}" class="slide-item">Jabatan</a></li>
-
-
           </ul>
         </li>
 
@@ -47,9 +45,16 @@
         </li>
 
         <li class="slide">
-          <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('admin.absensi') }}"><i
-              class="side-menu__icon fe fe-book"></i><span class="side-menu__label">Data Absensi</span>
-          </a>
+          <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+              class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">Absensi Pegawai</span><i
+              class="angle fa fa-angle-right"></i></a>
+          <ul class="slide-menu" style="display: none;">
+            <li class="side-menu-label1"><a href="javascript:void(0)">Absensi Pegawai</a></li>
+            {{-- <li><a href="{{ route('admin.jam.kerja') }}" class="slide-item">Jam Kerja</a></li> --}}
+            <li><a href="{{ route('admin.absensi.harian') }}" class="slide-item">Absensi Harian</a></li>
+
+            <li><a href="{{ route('admin.absensi') }}" class="slide-item">Data Absensi</a></li>
+          </ul>
         </li>
 
         <li class="slide">

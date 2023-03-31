@@ -44,7 +44,7 @@
               </div>
 
               <div class="card-footer ps-0">
-                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                <button type="submit" class="btn btn-primary mr-2">Proses</button>
                 <button type="reset" class="btn btn-secondary">Kembali</button>
               </div>
 

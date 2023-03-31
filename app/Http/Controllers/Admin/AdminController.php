@@ -10,6 +10,7 @@ use App\Models\JamKerja;
 use App\Models\Laporan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redis;
 
 class AdminController extends Controller
@@ -87,6 +88,18 @@ class AdminController extends Controller
         $d_jam_kerja = JamKerja::all();
 
         return view('admin.jam-kerja.index', compact('d_jam_kerja'));
+    }
+
+    public function absensiHarian()
+    {
+
+        $d_absen = Absen::with('user')
+            ->whereDate('created_at', Carbon::today())
+            ->orderBy('absen_masuk', 'desc')
+            ->get();
+
+
+        return view('admin.data-absensi.absensi-harian', compact('d_absen'));
     }
 
     public function absensi()
